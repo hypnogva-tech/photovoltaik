@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kostenloses Video – Solarenergie in der Schweiz</title>
+
+<!-- Facebook Pixel -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1646836646368027');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1646836646368027&ev=PageView&noscript=1"
+/></noscript>
+<!-- Ende Facebook Pixel -->
+
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bleu: #2D7DD2;
+    --bleu-dark: #1A5FA8;
+    --noir: #0D1B2A;
+    --or: #F5C518;
+    --rouge: #E8340A;
+    --blanc: #ffffff;
+    --gris: #f5f7fa;
+  }
+
+  body {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    background: var(--noir);
+    color: var(--blanc);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .top-bar {
+    width: 100%;
+    background: var(--rouge);
+    text-align: center;
+    padding: 5px 20px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+  }
+
+  .hero {
+    width: 100%;
+    max-width: 680px;
+    padding: 28px 24px 0;
+    text-align: center;
+  }
+
+  .eyebrow {
+    display: inline-block;
+    background: rgba(245,197,24,0.15);
+    color: var(--or);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 6px 16px;
+    border-radius: 20px;
+    margin-bottom: 24px;
+    border: 1px solid rgba(245,197,24,0.3);
+  }
+
+  .hero h1 {
+    font-size: clamp(1.4rem, 5vw, 2.6rem);
+    font-weight: 900;
+    line-height: 1.2;
+    margin-bottom: 16px;
+  }
+
+  .hero h1 .accent { color: var(--or); }
+
+  .hero .sub {
+    font-size: 1.05rem;
+    color: rgba(255,255,255,0.7);
+    line-height: 1.65;
+    margin-bottom: 16px;
+    max-width: 520px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .video-thumb { position: relative; width: 100%; max-width: 520px; margin: 0 auto 36px; border-radius: 12px; overflow: hidden; border: 2px solid rgba(245,197,24,0.4); }
+  .thumb-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    pointer-events: none;
+  }
+  .play-icon-overlay {
+    width: 64px;
+    height: 64px;
+    background: rgba(245,197,24,0.85);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    color: #0D1B2A;
+    padding-left: 4px;
+  }
+  .thumb-overlay-label {
+    font-size: 0.88rem;
+    color: rgba(255,255,255,0.85);
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    text-shadow: 0 1px 4px rgba(0,0,0,0.8);
+  }
+
+  .thumb-duration {
+    position: absolute;
+    bottom: 12px;
+    right: 12px;
+    background: rgba(0,0,0,0.7);
+    color: white;
+    font-size: 0.78rem;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 4px;
+  }
+
+  .thumb-lock {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    background: var(--rouge);
+    color: white;
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 4px;
+    letter-spacing: 0.05em;
+  }
+
+  .points {
+    width: 100%;
+    max-width: 480px;
+    margin: 0 auto 36px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    text-align: left;
+  }
+
+  .point {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    font-size: 0.97rem;
+    line-height: 1.5;
+    color: rgba(255,255,255,0.88);
+  }
+
+  .point .icon {
+    font-size: 1.1rem;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .form-box {
+    width: 100%;
+    max-width: 480px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 16px;
+    padding: 32px 28px;
+    margin: 0 auto 48px;
+  }
+
+  .form-box h2 {
+    font-size: 1.15rem;
+    font-weight: 800;
+    text-align: center;
+    margin-bottom: 6px;
+  }
+
+  .form-box .form-sub {
+    text-align: center;
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.5);
+    margin-bottom: 22px;
+  }
+
+  .form-box input {
+    width: 100%;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 8px;
+    padding: 14px 16px;
+    color: white;
+    font-size: 0.97rem;
+    font-family: inherit;
+    margin-bottom: 12px;
+    outline: none;
+    transition: border 0.2s;
+  }
+
+  .form-box input::placeholder { color: rgba(255,255,255,0.35); }
+  .form-box input:focus { border-color: var(--or); }
+
+  .checkbox-proprio {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 14px;
+    cursor: pointer;
+  }
+  .checkbox-proprio input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    min-width: 18px;
+    margin: 2px 0 0;
+    accent-color: var(--or);
+    cursor: pointer;
+  }
+  .checkbox-proprio span {
+    font-size: 0.9rem;
+    color: rgba(255,255,255,0.85);
+    line-height: 1.4;
+  }
+
+  .btn-optin {
+    width: 100%;
+    background: var(--or);
+    color: var(--noir);
+    font-size: 1.05rem;
+    font-weight: 900;
+    padding: 16px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    letter-spacing: 0.02em;
+    transition: background 0.2s, transform 0.1s;
+    margin-top: 4px;
+  }
+
+  .btn-optin:hover { background: #e0b014; transform: translateY(-1px); }
+  .btn-optin:disabled { opacity: 0.6; cursor: default; transform: none; }
+
+  .form-legal {
+    text-align: center;
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.3);
+    margin-top: 14px;
+    line-height: 1.5;
+  }
+
+  footer {
+    width: 100%;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    padding: 20px;
+    text-align: center;
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.25);
+  }
+
+  footer a { color: rgba(255,255,255,0.35); text-decoration: none; }
+
+  @media (max-width: 480px) {
+    .hero { padding: 16px 16px 0; }
+    .form-box { padding: 20px 16px; margin: 0 12px 32px; }
+    .points { padding: 0 16px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="top-bar">🔒 Kostenloser Zugang · Exklusives Video · Jetzt verfügbar</div>
+
+<section class="hero">
+  <div class="eyebrow">⚡ Hausbesitzer in der Schweiz</div>
+  <h1>Vermeiden Sie die Fehler,<br>die zu viele Schweizer machen<br><span class="accent">bei der Installation ihrer Solarmodule.</span></h1>
+  <p class="sub">
+    5-minütiges Video mit allem, was Sie unbedingt wissen müssen, bevor Sie Solarmodule bei sich zu Hause installieren.
+  </p>
+</section>
+
+<div class="video-thumb" onclick="document.getElementById('form-optin').scrollIntoView({behavior:'smooth'})" style="cursor:pointer; aspect-ratio: 16/9; background: rgba(255,255,255,0.04);"></div>
+
+<div class="form-box" id="form-optin">
+  <h2>Video kostenlos ansehen</h2>
+  <p class="form-sub">Geben Sie Ihre Kontaktdaten ein, ein Experte sendet Ihnen sofort den Zugang.</p>
+
+  <input type="text" id="prenom" placeholder="Vorname *">
+  <input type="email" id="email" placeholder="E-Mail *">
+  <input type="tel" id="tel" placeholder="Telefon *">
+
+  <!-- Honeypot Anti-Bot: für einen Menschen unsichtbares Feld, wird automatisch von Bots ausgefüllt -->
+  <input type="text" id="website" name="website" style="position:absolute; left:-9999px; opacity:0;" tabindex="-1" autocomplete="off">
+
+  <label class="checkbox-proprio">
+    <input type="checkbox" id="proprio-check">
+    <span>Ich bestätige, dass ich Eigentümer meines Hauses bin.</span>
+  </label>
+
+  <button class="btn-optin" id="btn-submit">Ich möchte das Video sehen →</button>
+
+  <p class="form-legal">
+    Mit der Übermittlung Ihrer Kontaktdaten erlauben Sie Das Energiehaus, Sie zu kontaktieren, um Ihnen den Zugang zum Video zu senden und Ihnen eine kostenlose Solaranalyse anzubieten. Ihre Daten sind vertraulich und werden niemals weiterverkauft.<br>
+    <a href="https://lamaisondesenergies.ch/index.php/politique-de-confidentialite/">Datenschutzrichtlinie</a>
+  </p>
+</div>
+
+<div class="points">
+  <div class="point">
+    <span class="icon">⚡</span>
+    <span>Warum Ihre Stromrechnung weiter steigen wird und was Sie jetzt dagegen tun können.</span>
+  </div>
+  <div class="point">
+    <span class="icon">🪙</span>
+    <span>Die kantonalen Förderungen und der bis 2029 verfügbare Steuerabzug – und wie Sie davon profitieren, bevor es zu spät ist.</span>
+  </div>
+  <div class="point">
+    <span class="icon">⚠️</span>
+    <span>Die 3 häufigsten Betrugsmaschen bei Solarinstallateuren in der Schweiz und wie Sie sie erkennen.</span>
+  </div>
+  <div class="point">
+    <span class="icon">✅</span>
+    <span>Was eine echte schlüsselfertige Installation beinhalten sollte. Ohne Überraschungen, ohne Stress.</span>
+  </div>
+</div>
+
+<footer>
+  © Das Energiehaus · Gärtnereiweg 23, 4665 Oftringen · 021 802 35 36<br>
+  <a href="https://lamaisondesenergies.ch/index.php/mentions-legales/">Impressum</a>
+</footer>
+
+<script>
+  const ZAPIER_WEBHOOK = 'https://hooks.zapier.com/hooks/catch/18792693/4bc4xc7/';
+
+  // Zeitstempel beim Laden der Seite, um zu schnelle Übermittlungen (Bots) zu erkennen
+  const pageLoadTime = Date.now();
+
+  // Validierungs-Regex — bewusst permissiv bei der FORM (Akzente DE/FR/IT,
+  // gerade oder geschwungene Apostrophe ' bzw. ’, Bindestriche, Leerzeichen), damit ein
+  // echter zusammengesetzter Name nie blockiert wird. Blockiert wird nur eindeutig
+  // anomaler Inhalt (Zahlen usw.)
+  const REGEX_NOM = /^[A-Za-zÀ-ÿĀ-žʼ' -]{2,60}$/;
+  const REGEX_EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+
+  const EMAILS_JETABLES = ['mailinator.com', 'yopmail.com', 'guerrillamail.com', 'tempmail.com'];
+
+  // Liste gängiger Schimpf-/Beleidigungswörter, die im Feld "Vorname" blockiert werden
+  const MOTS_INTERDITS = [
+    'scheisse', 'scheiße', 'arschloch', 'schlampe', 'hure', 'nutte', 'wichser',
+    'fotze', 'bastard', 'trottel', 'trottelin', 'idiot', 'idiotin', 'dumm', 'dumme',
+    'blöd', 'blode', 'blöde', 'blode', 'behindert', 'spast', 'volltrottel',
+    'arsch', 'mistkerl', 'schwachkopf', 'schwachsinnig', 'affe', 'missgeburt',
+    'video ist müll', 'video ist mist', 'schlecht', 'abzocke', 'betrug', 'scam'
+  ];
+
+  function contientMotInterdit(texte) {
+    // Normalisierung zur Erkennung von Umgehungsversuchen: Akzente entfernt, Leetspeak
+    // (3→e, 4→a, 0→o, 1→i, 5→s, 7→t), Leerzeichen/Bindestriche entfernt, Kleinbuchstaben.
+    const normaliser = (s) => s
+      .toLowerCase()
+      .normalize('NFD').replace(/[\u0300-\u036f]/g, '') // entfernt Akzente
+      .replace(/3/g, 'e').replace(/4/g, 'a').replace(/0/g, 'o')
+      .replace(/1/g, 'i').replace(/5/g, 's').replace(/7/g, 't')
+      .replace(/[^a-z]/g, ''); // entfernt Leerzeichen, Bindestriche, Satzzeichen
+
+    const texteNormalise = normaliser(texte);
+    return MOTS_INTERDITS.some(mot => texteNormalise.includes(normaliser(mot)));
+  }
+
+  function nettoyerTelephone(tel) {
+    // entfernt Leerzeichen, Punkte, Bindestriche, Klammern
+    let t = tel.replace(/[\s.\-()]/g, '');
+    // normalisiert internationale Vorwahlen auf das Schweizer Ortsformat (0…)
+    if (t.startsWith('+41')) t = '0' + t.slice(3);
+    else if (t.startsWith('0041')) t = '0' + t.slice(4);
+    return t;
+  }
+
+  function telephoneValide(t) {
+    // Schweiz: 10 Ziffern beginnend mit 0 (Fest- oder Mobilnetz, alle Vorwahlen: 021, 022, 024, 026, 027, 031, 078, 079 usw.)
+    if (/^0\d{9}$/.test(t)) return true;
+    // 9 Ziffern ohne führende 0 (häufig vergessen), wird automatisch ergänzt
+    if (/^\d{9}$/.test(t)) return true;
+    return false;
+  }
+
+  document.getElementById('btn-submit').addEventListener('click', () => {
+    const prenom = document.getElementById('prenom').value.trim();
+    const email  = document.getElementById('email').value.trim();
+    const telBrut = document.getElementById('tel').value.trim();
+    const tel = nettoyerTelephone(telBrut);
+    const proprio = document.getElementById('proprio-check')?.checked;
+    const honeypot = document.getElementById('website').value;
+
+    // --- Anti-Bot-Filter Nr. 1: Honeypot ausgefüllt = Bot, stillschweigend abgelehnt ---
+    if (honeypot) {
+      console.log('Übermittlung blockiert (Honeypot).');
+      return;
+    }
+
+    // --- Anti-Bot-Filter Nr. 2: zu schnelle Übermittlung (weniger als 3 Sekunden) ---
+    const tempsEcoule = Date.now() - pageLoadTime;
+    if (tempsEcoule < 3000) {
+      console.log('Übermittlung blockiert (zu schnell).');
+      return;
+    }
+
+    // --- Pflichtfelder ---
+    if (!prenom || !email || !tel) {
+      alert('Bitte füllen Sie alle Felder aus.');
+      return;
+    }
+
+    // --- Validierung des Vornamens (blockiert Beleidigungen, Zahlen, Zufallstext) ---
+    if (!REGEX_NOM.test(prenom)) {
+      alert('Bitte geben Sie einen gültigen Vornamen ein (nur Buchstaben).');
+      return;
+    }
+    if (contientMotInterdit(prenom)) {
+      alert('Bitte geben Sie einen gültigen Vornamen ein.');
+      return;
+    }
+
+    // --- Validierung der E-Mail-Adresse ---
+    if (!REGEX_EMAIL.test(email)) {
+      alert('Bitte geben Sie eine gültige E-Mail-Adresse ein.');
+      return;
+    }
+    const domaineEmail = email.split('@')[1]?.toLowerCase();
+    if (EMAILS_JETABLES.includes(domaineEmail)) {
+      alert('Bitte geben Sie eine persönliche E-Mail-Adresse ein (keine Wegwerf-Adresse).');
+      return;
+    }
+
+    // --- Validierung der Telefonnummer (tolerant beim Format, Fest- oder Mobilnetz) ---
+    if (!telephoneValide(tel)) {
+      alert('Bitte überprüfen Sie Ihre Telefonnummer (10 Ziffern, Fest- oder Mobilnetz — z. B. 021 802 35 36 oder 079 876 54 32).');
+      return;
+    }
+    // Ergänzt die führende 0, falls sie vergessen wurde
+    const telFinal = tel.length === 9 ? '0' + tel : tel;
+
+    if (!proprio) {
+      alert('Bitte bestätigen Sie, dass Sie Eigentümer Ihrer Immobilie sind.');
+      return;
+    }
+
+    const btn = document.getElementById('btn-submit');
+    btn.disabled = true;
+    btn.textContent = 'Wird gesendet…';
+
+    const formData = new URLSearchParams();
+    formData.append('prenom', prenom);
+    formData.append('email', email);
+    formData.append('phone', telFinal);
+    formData.append('source', 'optin-video');
+    formData.append('page', window.location.href);
+    formData.append('date', new Date().toISOString());
+
+    fetch(ZAPIER_WEBHOOK, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: formData.toString()
+    })
+    .catch(() => {})
+    .finally(() => {
+      if (typeof fbq === 'function') { fbq('track', 'Lead'); }
+      window.location.href = 'index.html';
+    });
+  });
+</script>
+
+</body>
+</html>
