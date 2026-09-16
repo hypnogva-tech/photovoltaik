@@ -839,7 +839,7 @@ src="https://www.facebook.com/tr?id=1646836646368027&ev=PageView&noscript=1"
   });
 
   // ── Formularübermittlung → Zapier + Pixel Lead + Weiterleitung ──
-  const ZAPIER_WEBHOOK = 'https://hooks.zapier.com/hooks/catch/18792693/4bc4xc7/';
+  const ZAPIER_WEBHOOK = 'https://hooks.zapier.com/hooks/catch/18792693/4drn78q/';
 
   function collectAndSubmit(prefix) {
     const prenom = document.getElementById(prefix + '-prenom')?.value.trim() || '';
@@ -859,6 +859,7 @@ src="https://www.facebook.com/tr?id=1646836646368027&ev=PageView&noscript=1"
     const payload = {
       prenom, nom, email, phone: tel, canton,
       source: 'index-contact',
+      lang: 'de',
       date: new Date().toISOString()
     };
 
