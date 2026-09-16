@@ -563,12 +563,24 @@ src="https://www.facebook.com/tr?id=1646836646368027&ev=PageView&noscript=1"
       <select id="f1-canton">
         <option value="" disabled selected>Kanton *</option>
         <option>Aargau</option>
-        <option>Zürich</option>
+        <option>Appenzell Ausserrhoden</option>
+        <option>Appenzell Innerrhoden</option>
+        <option>Basel-Landschaft</option>
+        <option>Basel-Stadt</option>
         <option>Bern</option>
+        <option>Glarus</option>
+        <option>Graubünden</option>
         <option>Luzern</option>
+        <option>Nidwalden</option>
+        <option>Obwalden</option>
+        <option>Schaffhausen</option>
+        <option>Schwyz</option>
         <option>Solothurn</option>
-        <option>Basel</option>
         <option>St. Gallen</option>
+        <option>Thurgau</option>
+        <option>Uri</option>
+        <option>Zug</option>
+        <option>Zürich</option>
       </select>
     </div>
     <button class="btn-cta" id="btn-form1">Ja, ich möchte meine kostenlose Analyse →</button>
@@ -781,8 +793,25 @@ src="https://www.facebook.com/tr?id=1646836646368027&ev=PageView&noscript=1"
         <input type="tel" id="f2-tel" placeholder="Telefon *">
         <select id="f2-canton">
           <option value="" disabled selected>Kanton *</option>
-          <option>Aargau</option><option>Zürich</option><option>Bern</option>
-          <option>Luzern</option><option>Solothurn</option><option>Basel</option><option>St. Gallen</option>
+          <option>Aargau</option>
+          <option>Appenzell Ausserrhoden</option>
+          <option>Appenzell Innerrhoden</option>
+          <option>Basel-Landschaft</option>
+          <option>Basel-Stadt</option>
+          <option>Bern</option>
+          <option>Glarus</option>
+          <option>Graubünden</option>
+          <option>Luzern</option>
+          <option>Nidwalden</option>
+          <option>Obwalden</option>
+          <option>Schaffhausen</option>
+          <option>Schwyz</option>
+          <option>Solothurn</option>
+          <option>St. Gallen</option>
+          <option>Thurgau</option>
+          <option>Uri</option>
+          <option>Zug</option>
+          <option>Zürich</option>
         </select>
       </div>
       <button class="btn-cta" id="btn-form2">Ja, ich möchte meine kostenlose Analyse →</button>
@@ -854,7 +883,18 @@ src="https://www.facebook.com/tr?id=1646836646368027&ev=PageView&noscript=1"
     }
 
     const btn = document.getElementById('btn-' + prefix.replace('-', ''));
-    if (btn) { btn.disabled = true; btn.textContent = 'Wird gesendet…'; }
+    if (btn) {
+      btn.disabled = true;
+      btn.textContent = 'Wird gesendet…';
+      // Sécurité : si la redirection échoue pour une raison quelconque,
+      // le bouton se réactive tout seul après quelques secondes.
+      setTimeout(() => {
+        if (btn.disabled) {
+          btn.disabled = false;
+          btn.textContent = btn.dataset.originalText || btn.textContent;
+        }
+      }, 6000);
+    }
 
     const payload = {
       prenom, nom, email, phone: tel, canton,
@@ -882,6 +922,19 @@ src="https://www.facebook.com/tr?id=1646836646368027&ev=PageView&noscript=1"
 
   document.getElementById('btn-form1')?.addEventListener('click', () => collectAndSubmit('f1'));
   document.getElementById('btn-form2')?.addEventListener('click', () => collectAndSubmit('f2'));
+
+  // ── Boutons : mémoriser le texte d'origine + réactivation si on revient sur la page ──
+  document.querySelectorAll('.btn-cta').forEach(btn => {
+    btn.dataset.originalText = btn.textContent;
+  });
+  window.addEventListener('pageshow', (event) => {
+    if (event.persisted) {
+      document.querySelectorAll('.btn-cta').forEach(btn => {
+        btn.disabled = false;
+        if (btn.dataset.originalText) { btn.textContent = btn.dataset.originalText; }
+      });
+    }
+  });
 </script>
 
 </body>
