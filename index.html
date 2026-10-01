@@ -301,14 +301,15 @@ src="https://www.facebook.com/tr?id=1646836646368027&ev=PageView&noscript=1"
 
 <div class="form-box" id="form-optin">
   <h2>Video kostenlos ansehen</h2>
-  <p class="form-sub">Geben Sie Ihre Kontaktdaten ein, ein Experte sendet Ihnen sofort den Zugang.</p>
+  <p class="form-sub">Geben Sie Ihre Kontaktdaten ein und sehen Sie sich das Video sofort an.</p>
 
   <input type="text" id="prenom" placeholder="Vorname *">
   <input type="email" id="email" placeholder="E-Mail *">
   <input type="tel" id="tel" placeholder="Telefon *">
 
-  <!-- Honeypot Anti-Bot: für einen Menschen unsichtbares Feld, wird automatisch von Bots ausgefüllt -->
-  <input type="text" id="website" name="website" style="position:absolute; left:-9999px; opacity:0;" tabindex="-1" autocomplete="off">
+  <!-- Honeypot Anti-Bot: für einen Menschen unsichtbares Feld, wird automatisch von Bots ausgefüllt.
+       Neutraler Name, damit die Autofill-Funktion der Browser es nicht ausfüllt. -->
+  <input type="text" id="hp_x7k" name="hp_x7k" style="position:absolute; left:-9999px; opacity:0;" tabindex="-1" autocomplete="off" aria-hidden="true">
 
   <label class="checkbox-proprio">
     <input type="checkbox" id="proprio-check">
@@ -343,7 +344,7 @@ src="https://www.facebook.com/tr?id=1646836646368027&ev=PageView&noscript=1"
 </div>
 
 <footer>
-  © Das Energiehaus · Gärtnereiweg 23, 4665 Oftringen · 021 802 35 36<br>
+  © Das Energiehaus · Gärtnereiweg 23, 4665 Oftringen · 062 218 75 40<br>
   <a href="https://lamaisondesenergies.ch/index.php/mentions-legales/">Impressum</a>
 </footer>
 
@@ -357,48 +358,29 @@ src="https://www.facebook.com/tr?id=1646836646368027&ev=PageView&noscript=1"
   // gerade oder geschwungene Apostrophe ' bzw. ’, Bindestriche, Leerzeichen), damit ein
   // echter zusammengesetzter Name nie blockiert wird. Blockiert wird nur eindeutig
   // anomaler Inhalt (Zahlen usw.)
-  const REGEX_NOM = /^[A-Za-zÀ-ÿĀ-žʼ' -]{2,60}$/;
+  const REGEX_NOM = /^[A-Za-zÀ-ÖØ-öø-ÿĀ-žʼ'’. -]{2,60}$/;
   const REGEX_EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
   const EMAILS_JETABLES = ['mailinator.com', 'yopmail.com', 'guerrillamail.com', 'tempmail.com'];
 
-  // Liste gängiger Schimpf-/Beleidigungswörter, die im Feld "Vorname" blockiert werden
-  const MOTS_INTERDITS = [
-    'scheisse', 'scheiße', 'arschloch', 'schlampe', 'hure', 'nutte', 'wichser',
-    'fotze', 'bastard', 'trottel', 'trottelin', 'idiot', 'idiotin', 'dumm', 'dumme',
-    'blöd', 'blode', 'blöde', 'blode', 'behindert', 'spast', 'volltrottel',
-    'arsch', 'mistkerl', 'schwachkopf', 'schwachsinnig', 'affe', 'missgeburt',
-    'video ist müll', 'video ist mist', 'schlecht', 'abzocke', 'betrug', 'scam'
-  ];
-
-  function contientMotInterdit(texte) {
-    // Normalisierung zur Erkennung von Umgehungsversuchen: Akzente entfernt, Leetspeak
-    // (3→e, 4→a, 0→o, 1→i, 5→s, 7→t), Leerzeichen/Bindestriche entfernt, Kleinbuchstaben.
-    const normaliser = (s) => s
-      .toLowerCase()
-      .normalize('NFD').replace(/[\u0300-\u036f]/g, '') // entfernt Akzente
-      .replace(/3/g, 'e').replace(/4/g, 'a').replace(/0/g, 'o')
-      .replace(/1/g, 'i').replace(/5/g, 's').replace(/7/g, 't')
-      .replace(/[^a-z]/g, ''); // entfernt Leerzeichen, Bindestriche, Satzzeichen
-
-    const texteNormalise = normaliser(texte);
-    return MOTS_INTERDITS.some(mot => texteNormalise.includes(normaliser(mot)));
-  }
-
   function nettoyerTelephone(tel) {
-    // entfernt Leerzeichen, Punkte, Bindestriche, Klammern
-    let t = tel.replace(/[\s.\-()]/g, '');
-    // normalisiert internationale Vorwahlen auf das Schweizer Ortsformat (0…)
+    // entfernt Leerzeichen, Punkte, Bindestriche, Schrägstriche, Klammern
+    let t = tel.replace(/[\s.\-\/()]/g, '');
+    // normalisiert Schweizer Vorwahlen auf das Ortsformat (0…)
     if (t.startsWith('+41')) t = '0' + t.slice(3);
     else if (t.startsWith('0041')) t = '0' + t.slice(4);
+    // "+41 (0)79…" ergibt "00…" → doppelte 0 entfernen
+    if (/^00\d{9}$/.test(t)) t = t.slice(1);
     return t;
   }
 
   function telephoneValide(t) {
-    // Schweiz: 10 Ziffern beginnend mit 0 (Fest- oder Mobilnetz, alle Vorwahlen: 021, 022, 024, 026, 027, 031, 078, 079 usw.)
+    // Schweiz: 10 Ziffern beginnend mit 0 (Fest- oder Mobilnetz)
     if (/^0\d{9}$/.test(t)) return true;
     // 9 Ziffern ohne führende 0 (häufig vergessen), wird automatisch ergänzt
     if (/^\d{9}$/.test(t)) return true;
+    // Ausländische Nummern (z. B. +33, +49, +39) werden ebenfalls akzeptiert
+    if (/^(\+|00)\d{8,15}$/.test(t)) return true;
     return false;
   }
 
@@ -408,20 +390,20 @@ src="https://www.facebook.com/tr?id=1646836646368027&ev=PageView&noscript=1"
     const telBrut = document.getElementById('tel').value.trim();
     const tel = nettoyerTelephone(telBrut);
     const proprio = document.getElementById('proprio-check')?.checked;
-    const honeypot = document.getElementById('website').value;
+    const honeypot = document.getElementById('hp_x7k').value;
 
-    // --- Anti-Bot-Filter Nr. 1: Honeypot ausgefüllt = Bot, stillschweigend abgelehnt ---
+    // --- Anti-Bot-Filter Nr. 1: Honeypot ausgefüllt = Bot ---
+    // Kein Versand, aber Weiterleitung zum Video: ein Bot merkt nichts,
+    // und ein Mensch bleibt im Ausnahmefall nicht vor einem "toten" Button stehen.
     if (honeypot) {
-      console.log('Übermittlung blockiert (Honeypot).');
+      window.location.href = 'video.html';
       return;
     }
 
-    // --- Anti-Bot-Filter Nr. 2: zu schnelle Übermittlung (weniger als 3 Sekunden) ---
-    const tempsEcoule = Date.now() - pageLoadTime;
-    if (tempsEcoule < 3000) {
-      console.log('Übermittlung blockiert (zu schnell).');
-      return;
-    }
+    // --- Anti-Bot-Hinweis Nr. 2: sehr schnelle Übermittlung (weniger als 3 Sekunden) ---
+    // Wird NICHT mehr blockiert (Autofill auf dem Handy ist oft so schnell),
+    // sondern nur markiert (Feld "envoi_rapide"), damit man in Zapier filtern kann.
+    const envoiRapide = (Date.now() - pageLoadTime) < 3000;
 
     // --- Pflichtfelder ---
     if (!prenom || !email || !tel) {
@@ -429,13 +411,9 @@ src="https://www.facebook.com/tr?id=1646836646368027&ev=PageView&noscript=1"
       return;
     }
 
-    // --- Validierung des Vornamens (blockiert Beleidigungen, Zahlen, Zufallstext) ---
+    // --- Validierung des Vornamens (nur Zahlen/Sonderzeichen werden blockiert) ---
     if (!REGEX_NOM.test(prenom)) {
       alert('Bitte geben Sie einen gültigen Vornamen ein (nur Buchstaben).');
-      return;
-    }
-    if (contientMotInterdit(prenom)) {
-      alert('Bitte geben Sie einen gültigen Vornamen ein.');
       return;
     }
 
@@ -452,7 +430,7 @@ src="https://www.facebook.com/tr?id=1646836646368027&ev=PageView&noscript=1"
 
     // --- Validierung der Telefonnummer (tolerant beim Format, Fest- oder Mobilnetz) ---
     if (!telephoneValide(tel)) {
-      alert('Bitte überprüfen Sie Ihre Telefonnummer (10 Ziffern, Fest- oder Mobilnetz — z. B. 021 802 35 36 oder 079 876 54 32).');
+      alert('Bitte überprüfen Sie Ihre Telefonnummer (10 Ziffern, Fest- oder Mobilnetz — z. B. 062 218 75 40 oder 079 876 54 32).');
       return;
     }
     // Ergänzt die führende 0, falls sie vergessen wurde
@@ -474,17 +452,44 @@ src="https://www.facebook.com/tr?id=1646836646368027&ev=PageView&noscript=1"
     formData.append('source', 'optin-video');
     formData.append('page', window.location.href);
     formData.append('date', new Date().toISOString());
+    formData.append('envoi_rapide', envoiRapide ? 'oui' : 'non');
+    const corps = formData.toString();
+
+    // Facebook-Lead-Event sofort senden (nicht erst beim Seitenwechsel,
+    // sonst wird es vom Browser oft abgebrochen)
+    if (typeof fbq === 'function') { fbq('track', 'Lead'); }
+
+    // Ersatzversand per Beacon: wird vom Browser auch beim Seitenwechsel zu Ende geschickt
+    let beaconEnvoye = false;
+    function envoyerParBeacon() {
+      if (beaconEnvoye) return;
+      beaconEnvoye = true;
+      try {
+        const blob = new Blob([corps], { type: 'application/x-www-form-urlencoded' });
+        return navigator.sendBeacon && navigator.sendBeacon(ZAPIER_WEBHOOK, blob);
+      } catch (e) { return false; }
+    }
+
+    let redirige = false;
+    function allerAVideo() {
+      if (redirige) return;
+      redirige = true;
+      // kurze Pause, damit das Facebook-Event sicher rausgeht
+      setTimeout(() => { window.location.href = 'video.html'; }, 400);
+    }
+
+    // Sicherheitsnetz: falls Zapier hängt, nach 4 s per Beacon senden und weiterleiten
+    const filet = setTimeout(() => { envoyerParBeacon(); allerAVideo(); }, 4000);
 
     fetch(ZAPIER_WEBHOOK, {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: formData.toString()
+      body: corps,
+      keepalive: true
     })
-    .catch(() => {})
-    .finally(() => {
-      if (typeof fbq === 'function') { fbq('track', 'Lead'); }
-      window.location.href = 'video.html';
-    });
+    .then(res => { if (!res.ok) envoyerParBeacon(); })
+    .catch(() => { envoyerParBeacon(); })
+    .finally(() => { clearTimeout(filet); allerAVideo(); });
   });
 </script>
 
