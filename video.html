@@ -862,18 +862,27 @@ src="https://www.facebook.com/tr?id=1646836646368027&ev=PageView&noscript=1"
 </footer>
 
 <script>
-  // ── Video: Loom-Player erst beim Klick laden (Seite lädt sofort) ──
+  // ── Video: Seite zuerst anzeigen, Loom-Player direkt danach im Hintergrund laden ──
+  // Auf dem Handy reicht so EIN Tipp auf den Loom-Play-Button.
   (function () {
     const facade = document.getElementById('video-facade');
     if (!facade) return;
-    const SRC = 'https://www.loom.com/embed/e953ef83f76c4421b0980d868e4387de?autoplay=1&hideEmbedTopBar=true&hide_share=true&hide_owner=true';
-    facade.addEventListener('click', () => {
+    const BASE = 'https://www.loom.com/embed/e953ef83f76c4421b0980d868e4387de?hideEmbedTopBar=true&hide_share=true&hide_owner=true';
+    let charge = false;
+    function chargerPlayer(autoplay) {
+      if (charge) return;
+      charge = true;
       const f = document.createElement('iframe');
-      f.src = SRC;
+      f.src = BASE + (autoplay ? '&autoplay=1' : '');
       f.allow = 'autoplay; fullscreen; picture-in-picture';
       f.setAttribute('allowfullscreen', '');
       facade.replaceWith(f);
-    });
+    }
+    // Klick, bevor der Player geladen ist (v. a. Computer) → sofort mit Autoplay
+    facade.addEventListener('click', () => chargerPlayer(true));
+    // Sonst automatisch laden, sobald die Seite angezeigt ist
+    if (document.readyState === 'complete') setTimeout(() => chargerPlayer(false), 200);
+    else window.addEventListener('load', () => setTimeout(() => chargerPlayer(false), 200));
   })();
 
   // ── FAQ Akkordeon ──
