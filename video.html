@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Das Energiehaus – Ihre kostenlose Solaranalyse</title>
 
+<link rel="preconnect" href="https://www.loom.com">
+<link rel="preconnect" href="https://cdn.loom.com">
 <!-- Facebook Pixel -->
 <script>
 !function(f,b,e,v,n,t,s)
@@ -161,6 +163,19 @@ src="https://www.facebook.com/tr?id=1646836646368027&ev=PageView&noscript=1"
     width: 100%; height: 100%;
     border: none;
   }
+  .video-facade {
+    position: absolute; inset: 0; width: 100%; height: 100%;
+    border: none; padding: 0; cursor: pointer;
+    background: #0D1B2A; display: flex; align-items: center; justify-content: center;
+  }
+  .video-facade img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .facade-play {
+    position: relative; width: 84px; height: 84px; border-radius: 50%;
+    background: rgba(245,197,24,0.95); color: #0D1B2A; font-size: 2rem;
+    display: flex; align-items: center; justify-content: center; padding-left: 6px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.5); transition: transform 0.15s;
+  }
+  .video-facade:hover .facade-play { transform: scale(1.08); }
   .video-caption {
     text-align: center;
     color: rgba(255,255,255,0.45);
@@ -536,14 +551,14 @@ src="https://www.facebook.com/tr?id=1646836646368027&ev=PageView&noscript=1"
   <div class="video-container">
     <p class="video-label">▶ Warum Tausende Hausbesitzer aufgehört haben, ihren Energieversorger zu bezahlen</p>
     <div class="video-wrapper">
-      <iframe
-        src="https://www.loom.com/embed/e953ef83f76c4421b0980d868e4387de"
-        frameborder="0"
-        webkitallowfullscreen
-        mozallowfullscreen
-        allowfullscreen>
-      </iframe>
+      <button type="button" class="video-facade" id="video-facade" aria-label="Video abspielen">
+        <img src="video-thumbnail.png" alt="" onerror="this.style.display='none'">
+        <span class="facade-play">▶</span>
+      </button>
     </div>
+    <p style="text-align:center;margin-top:12px;font-size:0.85rem;">
+      <a href="https://www.loom.com/share/e953ef83f76c4421b0980d868e4387de" target="_blank" rel="noopener" style="color:#F5C518;font-weight:700;">Video wird nicht angezeigt? Hier ansehen →</a>
+    </p>
     <p class="video-caption">Dauer: ~5 Min. · Warum Solarenergie, welche Fehler Sie vermeiden sollten, und wie Sie Ihre kostenlose Analyse erhalten</p>
   </div>
 </section>
@@ -847,6 +862,20 @@ src="https://www.facebook.com/tr?id=1646836646368027&ev=PageView&noscript=1"
 </footer>
 
 <script>
+  // ── Video: Loom-Player erst beim Klick laden (Seite lädt sofort) ──
+  (function () {
+    const facade = document.getElementById('video-facade');
+    if (!facade) return;
+    const SRC = 'https://www.loom.com/embed/e953ef83f76c4421b0980d868e4387de?autoplay=1&hideEmbedTopBar=true&hide_share=true&hide_owner=true';
+    facade.addEventListener('click', () => {
+      const f = document.createElement('iframe');
+      f.src = SRC;
+      f.allow = 'autoplay; fullscreen; picture-in-picture';
+      f.setAttribute('allowfullscreen', '');
+      facade.replaceWith(f);
+    });
+  })();
+
   // ── FAQ Akkordeon ──
   document.querySelectorAll('.faq-question').forEach(q => {
     q.addEventListener('click', () => {
