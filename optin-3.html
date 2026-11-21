@@ -520,7 +520,8 @@ fbq('init','1646836646368027');fbq('track','PageView');
 
 <script>
 (function(){
-  const WEBHOOK_URL='https://hooks.zapier.com/hooks/catch/18792693/4bc4xc7/';
+  // Zap das Energiehaus (Deutschschweiz) – gleicher Webhook wie die Video-Optin-Seite
+  const WEBHOOK_URL='https://hooks.zapier.com/hooks/catch/18792693/4drn78q/';
   const pageLoadTime=Date.now();
 
   // ---------- Paramètres de campagne (gardés pendant la visite) ----------
@@ -710,7 +711,8 @@ fbq('init','1646836646368027');fbq('track','PageView');
       type_logement:data.logement, facture:data.facture, avancement:data.avancement, projet:data.avancement,
       equipements:data.equipements.join(', '),
       qualifie:'oui', statut:'Qualifizierter Lead',
-      source:'optin-de', variante:'simulateur', page:location.href,
+      source:'optin-deh', variante:'simulateur',
+      entreprise:'das Energiehaus', marche:'Suisse alémanique', langue:'de', page:location.href,
       date:dateSuisse, event_id:eventId,
       campagne:utm.utm_campaign, ensemble_pub:utm.utm_term, pub:utm.utm_content, tag
     };
@@ -718,7 +720,7 @@ fbq('init','1646836646368027');fbq('track','PageView');
     try{
       await fetch(WEBHOOK_URL,{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:new URLSearchParams(payload).toString()});
     }catch(e){ console.error(e); }
-    track('track','Lead',{content_name:'optin-3',facture:data.facture,type_logement:data.logement},{eventID:eventId});
+    track('track','Lead',{content_name:'optin-deh',facture:data.facture,type_logement:data.logement},{eventID:eventId});
   }
 
   // ---------- Boutons ----------
