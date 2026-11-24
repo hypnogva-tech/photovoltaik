@@ -303,7 +303,8 @@ src="https://www.facebook.com/tr?id=1646836646368027&ev=PageView&noscript=1"
   <h2>Video kostenlos ansehen</h2>
   <p class="form-sub">Geben Sie Ihre Kontaktdaten ein und sehen Sie sich das Video sofort an.</p>
 
-  <input type="text" id="prenom" placeholder="Vorname *">
+  <input type="text" id="prenom" placeholder="Vorname *" autocomplete="given-name">
+  <input type="text" id="nom" placeholder="Nachname *" autocomplete="family-name">
   <input type="email" id="email" placeholder="E-Mail *">
   <input type="tel" id="tel" placeholder="Telefon *">
 
@@ -386,6 +387,7 @@ src="https://www.facebook.com/tr?id=1646836646368027&ev=PageView&noscript=1"
 
   document.getElementById('btn-submit').addEventListener('click', () => {
     const prenom = document.getElementById('prenom').value.trim();
+    const nom    = document.getElementById('nom').value.trim();
     const email  = document.getElementById('email').value.trim();
     const telBrut = document.getElementById('tel').value.trim();
     const tel = nettoyerTelephone(telBrut);
@@ -406,7 +408,7 @@ src="https://www.facebook.com/tr?id=1646836646368027&ev=PageView&noscript=1"
     const envoiRapide = (Date.now() - pageLoadTime) < 3000;
 
     // --- Pflichtfelder ---
-    if (!prenom || !email || !tel) {
+    if (!prenom || !nom || !email || !tel) {
       alert('Bitte füllen Sie alle Felder aus.');
       return;
     }
@@ -414,6 +416,10 @@ src="https://www.facebook.com/tr?id=1646836646368027&ev=PageView&noscript=1"
     // --- Validierung des Vornamens (nur Zahlen/Sonderzeichen werden blockiert) ---
     if (!REGEX_NOM.test(prenom)) {
       alert('Bitte geben Sie einen gültigen Vornamen ein (nur Buchstaben).');
+      return;
+    }
+    if (!REGEX_NOM.test(nom)) {
+      alert('Bitte geben Sie einen gültigen Nachnamen ein (nur Buchstaben).');
       return;
     }
 
@@ -447,6 +453,7 @@ src="https://www.facebook.com/tr?id=1646836646368027&ev=PageView&noscript=1"
 
     const formData = new URLSearchParams();
     formData.append('prenom', prenom);
+    formData.append('nom', nom);
     formData.append('email', email);
     formData.append('phone', telFinal);
     formData.append('source', 'optin-video');
